@@ -4300,7 +4300,7 @@ def create_children_from_directory(config, parent_csv_record, parent_node_id, pa
     # 'paged_content_sequence_separator' config option.
     parent_id = parent_csv_record[config['id_field']]
     page_dir_path = os.path.join(config['input_dir'], parent_id)
-    page_files = os.listdir(page_dir_path)
+    page_files = sorted(os.listdir(page_dir_path))
     page_file_return_dict = dict()
     for page_file_name in page_files:
         filename_without_extension = os.path.splitext(page_file_name)[0]
