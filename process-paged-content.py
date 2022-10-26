@@ -22,7 +22,7 @@ def process_replacements(s, replacements):
 
 def produce_csv(workdir, replacements):
     csv_filepath = os.path.join(workdir, 'metadata.csv')
-    writer = csv.writer(open(csv_filepath, 'w'))
+    writer = csv.writer(open(csv_filepath, 'w', newline=''), lineterminator=os.linesep)
     writer.writerow(['id', 'title', 'field_model', 'field_display_hints'])
     rows = 0
     for filepath in os.listdir(workdir):
@@ -50,7 +50,7 @@ def process_files(workdir):
         shutil.move(full_filepath, dirpath)
 
         # split into pages
-        p = subprocess.run("pdftk '%s' burst output page-%%02d.pdf" % filepath, 
+        p = subprocess.run('pdftk "%s" burst output page-%%02d.pdf' % filepath, 
                            cwd=os.path.join(os.getcwd(), dirpath), shell=True, capture_output=True, universal_newlines=True)
         if p.returncode != 0:
             print("pdftk returned an error processing %s:" % filepath)
